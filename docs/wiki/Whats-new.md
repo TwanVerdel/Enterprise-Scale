@@ -1,6 +1,12 @@
 ## In this Section
 
 - [Updates](#updates)
+  - [January 2024](#january-2024)
+  - [December 2023](#december-2023)
+  - [November 2023](#november-2023)
+  - [October 2023](#october-2023)
+  - [September 2023](#september-2023)
+  - [August 2023](#august-2023)
   - [July 2023](#july-2023)
   - [June 2023](#june-2023)
   - [May 2023](#may-2023)
@@ -8,7 +14,6 @@
   - [March 2023](#march-2023)
   - [February 2023](#february-2023)
   - [January 2023](#january-2023)
-  - [December 2022](#december-2022)
   - [Previous Updates](#november-2022)
 
 ---
@@ -36,7 +41,101 @@ This article will be updated as and when changes are made to the above and anyth
 
 Here's what's changed in Enterprise Scale/Azure Landing Zones:
 
-## August 2023
+### January 2024
+
+#### Tooling
+
+- Bug fix for Portal Accelerator, removing region restrictions for VPN Gateways when deploying regional (not AZ).
+- Bug fix for Portal Accelerator deployment when deploying using a single platform subscription. Previously, a single tenant deployment would have three failed deployments for diagnostic settings which were looking for non-existent management groups (Management, Identity and Connectivity). This has been fixed and the deployment will now succeed.
+- Added drop down selection option for Azure Private Link Private DNS Zones as part of portal based ALZ deployment experience where you can select to deploy or not to deploy a subset of Private Link Private DNS zones.
+
+### December 2023
+
+#### Tooling
+
+- Added a new policy/initiative submission form template for GitHub Issues. This will help us to better understand the policy/initiative you are submitting and will help us to review and approve the submission faster. Please use this template when submitting new policies/initiatives to the ALZ GitHub Issues page.
+
+#### Other
+
+- December 6th External Community Call recording and slides published to [aka.ms/alz/community](https://aka.ms/alz/community)
+
+### November 2023
+
+#### Tooling
+
+- Added virtual hub routing preference support to Portal Accelerator for scenarios where you need to influence routing decisions in virtual hub router towards on-premises. For existing ALZ customers please visit [Configure virtual hub routing preference](https://learn.microsoft.com/azure/virtual-wan/howto-virtual-hub-routing-preference) for details on how to configure virtual hub routing preference settings.
+- Added virtual hub capacity option to Portal Accelerator which provides an option to select the number of routing infrastracture units. Please visit [Virtual hub capacity](https://learn.microsoft.com/azure/virtual-wan/hub-settings#capacity) for more details on Azure vWAN Virtual Hub Capacity configuration.
+- Fixed a bug in the portal accelerator experience when deploying with single platform subscription and selecting virtual WAN networking topology - Invalid Template error.
+
+#### Docs
+
+- Fixed in ALZ Azure Setup the bash command to assign at root scope _Owner_ role to a Service Principal.
+- Added a new section to describe ALZ Policy Testing Framework for ALZ custom policies [Policies Testing Framework](./ALZ-Policies-Testing).
+
+### October 2023
+
+#### Policy
+
+- The portal accelerator experience has been updated to include deployment of Azure Monitor baseline alerts. Details on the policies deployed can be found [here](https://aka.ms/amba/alz).
+- Fixed issue with couple of Policy file names to align with the actual name of the policies
+- Bug fix for [Deploy-MDFC-Config](https://www.azadvertizer.net/azpolicyinitiativesadvertizer/Deploy-MDFC-Config.html) version
+- Add support to deploy ALZ Portal Accelerator into new Italy North region
+
+#### Tooling
+
+- Fixed a bug in the portal accelerator experience when deploying a VPN Gateway and Azure Firewall (Basic SKU) - IP address overlap error.
+- Added vWAN Hub Routing Intent support to Portal Accelerator for scenarios that include Azure Firewall deployment. For existing ALZ customers please visit [How to configure Virtual WAN Hub routing intent and routing policies](https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies) for details on how to add routing intent to your environment.
+- Enhanced the ALZ Portal Accelerator to provide the ability to deploy the Azure VPN Gateway in Active/Active mode as per feedback from [#655](https://github.com/Azure/Enterprise-Scale/issues/655).
+
+#### Docs
+
+- Updated the ALZ Wiki FAQ to include a section on why we've enabled GitHub Releases - [read here](https://github.com/Azure/Enterprise-Scale/wiki/FAQ#what-is-the-impact-of-github-releases-and-alz).
+- Updated the ALZ Wiki FAQ to include a section on why some solutions may not deploy in an ALZ governed environment and how to work around it.
+
+### September 2023
+
+#### Policy
+
+- Updated to the new [Configure Microsoft Defender for Storage to be enabled](https://www.azadvertizer.com/azpolicyadvertizer/cfdc5972-75b3-4418-8ae1-7f5c36839390.html) built-in policy to the `Deploy-MDFC-Config` initiative and assignment.
+  - Read more about the new Microsoft Defender for Storage here: [aka.ms//DefenderForStorage](https://aka.ms//DefenderForStorage).
+  - NOTE: there are additional cost considerations associated with this feature - [more info](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-storage-introduction#malware-scanning-powered-by-microsoft-defender-antivirus).
+- Added two new definitions with Deny Action feature:
+  - `DenyAction-ActivityLogSettings.json`
+  - `DenyAction-DiagnosticSettings.json`
+- Bug fix for missing diagnostic settings category for policy `Deploy-Diagnostics-CosmosDB`
+- Added the [Configure Azure Databricks workspace to use private DNS zones](https://www.azadvertizer.com/azpolicyadvertizer/0eddd7f3-3d9b-4927-a07a-806e8ac9486c.html) built-in policy to the "Deploy-Private-DNS-Zones" initiative and assignment.
+
+> **Important:** For existing ALZ deployments, you will need to redeploy the below assignments with least privilege RBAC roles, and review and remove existing service principals `Owner` role assignments. The below list includes the scope that needs to be reviewed. For new deployments, the below assignments will be deployed with least privilege RBAC roles.
+
+![Where to find RBAC roles to cleanup](media/WN-RBACCleanup.png)
+
+- Remediating default policy/initiative assignments using `Owner` role to be least privilege where possible. Updated assignments:
+  - Deploy-AzActivity-Log (Management Group: Intermediate Root)
+  - Deploy-AKS-Policy (added additional required role)
+  - Deploy-Resource-Diag (Management Group: Intermediate Root)
+  - Deploy-SQL-TDE (Management Group: Landing Zone)
+  - Deploy-VM-Backup (Management Group: Landing Zone)
+  - Deploy-VM-Monitoring (Management Group: Intermediate Root)
+  - Deploy-VMSS-Monitoring (Management Group: Intermediate Root)
+
+#### Other
+
+- [Azure Landing Zone External Community Call - September 2023 - Hosted & Published](https://github.com/Azure/Enterprise-Scale/wiki/Community-Calls#25th-september-2023-25092023)
+
+### August 2023
+
+#### Policy
+
+- Updating custom policies using over permissive roles (Owner) to use resource scoped roles (e.g., Storage Account Contributor, Azure SQL Contributor, etc.):
+  - Deploy-Storage-sslEnforcement
+  - Deploy-SqlMi-minTLS
+    - Added evaluationDelay as provisioning takes around 4 hours and policy remediation fails on create due to time outs (as it normally triggers after 10 minutes).
+  - Deploy-SQL-minTLS
+  - Deploy-MySQL-sslEnforcement (changed from Owner to Contributor role, no built in roles currently available)
+  - Deploy-PostgreSQL-sslEnforcement (changed from Owner to Contributor role, no built in roles currently available)
+- Updated to the new [Configure Microsoft Defender for Storage to be enabled](https://www.azadvertizer.com/azpolicyadvertizer/cfdc5972-75b3-4418-8ae1-7f5c36839390.html) built-in policy to the `Deploy-MDFC-Config` initiative and assignment.
+  - Read more about the new Microsoft Defender for Storage here: [aka.ms//DefenderForStorage](https://aka.ms//DefenderForStorage).
+  - NOTE: there are additional cost considerations associated with this feature - [more info](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-storage-introduction#malware-scanning-powered-by-microsoft-defender-antivirus).
 
 #### Other
 
@@ -44,16 +143,28 @@ Here's what's changed in Enterprise Scale/Azure Landing Zones:
 
 ### July 2023
 
+Major update in this release: introducing the Policy Testing Framework foundation, along with tests for all assigned infrastructure policies that use the DENY effect. This will allow us to test the policies in a more automated fashion, and will help us to ensure that we don't introduce any regressions in the future and maintain a higher level of quality for our policies. We will be adding additional tests for custom policies in the future.
+
 #### Policy
 
+- Added additional initiative assignment for [Enforce-Guardrails-KeyVault](https://www.azadvertizer.net/azpolicyinitiativesadvertizer/Enforce-Guardrails-KeyVault.html) to the Platform Management Group to improve security coverage. Initially this assignment was only applied to the Landing Zone Management Group.
+  - Update Portal RI to include the new assignment option for the Key Vault initiative under Platform Management.
 - Added new custom policy to audit Virtual Machines not using Azure Hybrid Benefit (Audit-AzureHybridBenefit)
 - Fixing bug in [Deploy-Sql-vulnerabilityAssessments](https://www.azadvertizer.net/azpolicyadvertizer/Deploy-Sql-vulnerabilityAssessments.html) to achieve compliance if successfully remediated. NOTE: Due to the need to change parameters, this is a breaking change. The original policy will remain in place but will be deprecated and a new policy will be deployed for the fix [Deploy-Sql-vulnerabilityAssessments_20230706](https://www.azadvertizer.net/azpolicyadvertizer/Deploy-Sql-vulnerabilityAssessments_20230706.html) - please update assignments accordingly - many thanks @Matt-FFFFFF.
 - Bug fix for [Management port access from the Internet should be blocked](https://www.azadvertizer.net/azpolicyadvertizer/Deny-MgmtPorts-From-Internet.html) not enforcing deny effect when a deployment includes rules defined in network security group properties (i.e., when specifying rules when creating the NSG) - many thanks to @DavidRobson.
+- QoL updates: adding supersededBy metadata and adding links in the description to deprecated custom policies to point to the superseding policy - aligned with ALZ specific feature updates in [AzAdvertizer](https://www.azadvertizer.net/).
+- Policy Testing Framework implemented for custom ALZ DENY policies (See Tooling section below).
 
 #### Tooling
 
 - Enhanced the Azure Firewall Basic experience in the ALZ Portal Accelerator based on feedback from [#1370](https://github.com/Azure/Enterprise-Scale/issues/1370) by removing the DNS proxy option when selecting the `Basic` SKU
 - Updated Sentinel deployment to use new [simplified pricing tier](https://learn.microsoft.com/azure/sentinel/enroll-simplified-pricing-tier?tabs=azure-resource-manager)
+- Established a Policy Testing Framework based on Pester, built on the work done by @fawohlsc in this repo [azure-policy-testing](https://github.com/fawohlsc/azure-policy-testing)
+
+#### Docs
+
+- Updated contribution guide to include a new section to describe how to implement tooltips when adding new policies with default assignments that require updates to the portal reference implementation.
+- Adding text to the ALZ-Policies wiki page to clarify that we do use preview policies as part of initiatives in some default assignments.
 
 ### June 2023
 
