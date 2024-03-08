@@ -179,7 +179,7 @@
                                 "regex": "^[a-z0-9A-Z-]{1,10}$",
                                 "validationMessage": "The prefix must be 1-10 characters."
                             }
-                        },                      
+                        },
                         {
                             "name": "LocationPrefix",
                             "type": "Microsoft.Common.TextBox",
@@ -191,7 +191,7 @@
                                 "regex": "^[a-z0-9A-Z-]{1,10}$",
                                 "validationMessage": "The prefix must be 1-10 characters."
                             }
-                        },            
+                        },
                         {
                             "name": "platformSubscription",
                             "type": "Microsoft.Common.OptionsGroup",
@@ -4003,11 +4003,11 @@
         "outputs": {
             "parameters": {
                 "enterpriseScaleCompanyPrefix": "[steps('core').enterpriseScaleCompanyPrefix]",
-                "SubscriptionPrefixCon": "[steps('core').SubscriptionPrefixCon]" ,
-                "SubscriptionPrefixIdt": "[steps('core').SubscriptionPrefixIdt]" ,
-                "SubscriptionPrefixMgmt": "[steps('core').SubscriptionPrefixMgmt]" ,
-                "SubscriptionPrefixLz": "[steps('core').SubscriptionPrefixLz]" ,
-                "LocationPrefix": "[steps('core').LocationPrefix]" ,
+                "SubscriptionPrefixCon": "[steps('core').SubscriptionPrefixCon]",
+                "SubscriptionPrefixIdt": "[steps('core').SubscriptionPrefixIdt]",
+                "SubscriptionPrefixMgmt": "[steps('core').SubscriptionPrefixMgmt]",
+                "SubscriptionPrefixLz": "[steps('core').SubscriptionPrefixLz]",
+                "LocationPrefix": "[steps('core').LocationPrefix]",
                 "singlePlatformSubscriptionId": "[steps('core').singleSubscription.selector]",
                 "denyClassicResources": "[steps('core').denyClassicResources]",
                 "denyVMUnmanagedDisk": "[steps('core').denyVMUnmanagedDisk]",
