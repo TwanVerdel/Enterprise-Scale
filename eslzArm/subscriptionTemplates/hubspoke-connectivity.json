@@ -174,7 +174,7 @@
             "type": "string",
             "defaultValue": ""
         },
-        "SubscriptionPrefixPlt": {
+        "SubscriptionPrefixCon": {
             "type": "string"
         },
         "LocationPrefix": {
@@ -182,7 +182,7 @@
         }
     },
     "variables": {
-        "locationSubname": "[toUpper(concat(parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
+        "locationSubname": "[toUpper(concat(parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
         "vpngwname": "[toUpper(concat('VPNGW-', parameters('topLevelManagementGroupPrefix'), '-', variables('locationSubname')))]",
         "erGwName": "[toUpper(concat('ERGW-', parameters('topLevelManagementGroupPrefix'), '-', variables('locationSubname')))]",
         "rgName": "[toUpper(concat('RG-VNETHUB-', parameters('topLevelManagementGroupPrefix'), '-', variables('locationSubname')))]",

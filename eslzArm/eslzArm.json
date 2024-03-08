@@ -9,16 +9,28 @@
                 "description": "Provide a prefix (max 10 characters, unique at tenant-scope) for the Management Group hierarchy and other resources created as part of Enterprise-scale."
             }
         },
-        "SubscriptionPrefixPlt": {
+        "SubscriptionPrefixCon": {
             "type": "string",
             "metadata": {
-                "description": "Name of the subscription platform"
+                "description": "Name of the subscription connection"
             }
         },
         "SubscriptionPrefixLz": {
             "type": "string",
             "metadata": {
                 "description": "Name of the subscription landingzone"
+            }
+        },
+        "SubscriptionPrefixIdt": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the subscription identity"
+            }
+        },
+        "SubscriptionPrefixMgmt": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the subscription management"
             }
         },
         "LocationPrefix": {
@@ -898,7 +910,7 @@
                 "input": "[items(variables('mgmtGroupsLite'))[copyIndex('mgmtGroupsESLiteArray')].value]"
             }
         ],
-        
+
         // Declaring scopes that will be used for optional deployments, such as platform components (monitoring, networking, identity), policy assignments, subscription placement etc.
         "scopes": {
             "eslzRootManagementGroup": "[tenantResourceId('Microsoft.Management/managementGroups/', variables('mgmtGroups').eslzRoot)]",
@@ -1087,28 +1099,28 @@
         },
         // Declaring deterministic names for Resource Groups that will be created for platform resources
         "platformRgNames": {
-            "mgmtRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-MGMT-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "connectivityRg": "[toUpper(concat('RG-VNETHUB-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "ddosRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-DDOS', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "privateDnsRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-PRIVATEDNS', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "identityVnetRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-VNET-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixLz')))]",
+            "mgmtRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-MGMT-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixMgmt')))]",
+            "connectivityRg": "[toUpper(concat('RG-VNETHUB-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "ddosRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-DDOS', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "privateDnsRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-PRIVATEDNS', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "identityVnetRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-VNET-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixIdt')))]",
             "lzVnetRg": "[toUpper(concat('RG-', parameters('enterpriseScaleCompanyPrefix'), '-VNET-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixLz')))]"
         },
         // Declaring deterministic names for platform resources that will be created
         "platformResourceNames": {
             "logAnalyticsWorkspace": "[toUpper(concat('LAWS-', parameters('enterpriseScaleCompanyPrefix')))]",
             "automationAccount": "[toUpper(concat('AAUTO-', parameters('enterpriseScaleCompanyPrefix')))]",
-            "vpnGwName": "[toUpper(concat('VPNGW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "erGwName": "[toUpper(concat('ERGW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "ddosName": "[toUpper(concat('DDOS-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "azFwPolicyName": "[toUpper(concat('AZFWPOLICY-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "azFwName": "[toUpper(concat('FW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "azErGwIpName": "[toUpper(concat('ERPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "hubName": "[toUpper(concat('VNET-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "vwanName": "[toUpper(concat('VWAN-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "azVpnGwIpName": "[toUpper(concat('GWPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "azFwIpName": "[toUpper(concat('FWPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixPlt')))]",
-            "identityVnet": "[toUpper(concat('VNET-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixLz')))]",
+            "vpnGwName": "[toUpper(concat('VPNGW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "erGwName": "[toUpper(concat('ERGW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "ddosName": "[toUpper(concat('DDOS-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "azFwPolicyName": "[toUpper(concat('AZFWPOLICY-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "azFwName": "[toUpper(concat('FW-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "azErGwIpName": "[toUpper(concat('ERPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "hubName": "[toUpper(concat('VNET-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "vwanName": "[toUpper(concat('VWAN-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "azVpnGwIpName": "[toUpper(concat('GWPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "azFwIpName": "[toUpper(concat('FWPIP-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixCon')))]",
+            "identityVnet": "[toUpper(concat('VNET-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixIdt')))]",
             "lzVnet": "[toUpper(concat('VNET-', parameters('enterpriseScaleCompanyPrefix'), '-', parameters('LocationPrefix'), '-', parameters('SubscriptionPrefixLz')))]"
         },
         // Declaring deterministic resourceId's for platform resources that will be created
@@ -1548,6 +1560,7 @@
             The following deployments will optionally configure the governance, security, and monitoring for the Azure platform and landing zones
         */
         {
+            //Ok
             // Deploying Log Analytics workspace to management subscription if condition is true
             "condition": "[and(equals(parameters('enableLogAnalytics'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
@@ -1588,6 +1601,7 @@
             }
         },
         {
+            //Ok
             // Deploying Log Analytics solutions to Log Analytics workspace if condition is true
             "condition": "[and(and(not(empty(parameters('managementSubscriptionId'))), equals(parameters('enableLogAnalytics'), 'Yes')),  equals(parameters('enableLogAnalytics'), 'Yes'), or(or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableSqlAssessment'), 'Yes')), equals(parameters('enableSqlAdvancedThreatProtection'), 'Yes')), equals(parameters('enableSqlVulnerabilityAssessment'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
@@ -1643,6 +1657,7 @@
             }
         },
         {
+            //Ok
             // Assigning Log Analytics workspace policy to management management group if condition is true
             "condition": "[and(equals(parameters('enableLogAnalytics'), 'Yes'), not(empty(parameters('managementSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
@@ -1686,6 +1701,7 @@
             }
         },
         {
+            //Ok
             // Deploying Diagnostic Settings to management groups if Log Analytics was deployed via a loop
             "condition": "[and(empty(parameters('singlePlatformSubscriptionId')), not(empty(parameters('managementSubscriptionId'))), equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
@@ -2231,8 +2247,8 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
-                    "SubscriptionPrefixPlt": {
-                        "value": "[parameters('SubscriptionPrefixPlt')]"
+                    "SubscriptionPrefixCon": {
+                        "value": "[parameters('SubscriptionPrefixCon')]"
                     },
                     "LocationPrefix": {
                         "value": "[parameters('LocationPrefix')]"
@@ -2333,8 +2349,8 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
-                    "SubscriptionPrefixPlt": {
-                        "value": "[parameters('SubscriptionPrefixPlt')]"
+                    "SubscriptionPrefixCon": {
+                        "value": "[parameters('SubscriptionPrefixCon')]"
                     },
                     "LocationPrefix": {
                         "value": "[parameters('LocationPrefix')]"
@@ -2417,8 +2433,8 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
-                    "SubscriptionPrefixPlt": {
-                        "value": "[parameters('SubscriptionPrefixPlt')]"
+                    "SubscriptionPrefixCon": {
+                        "value": "[parameters('SubscriptionPrefixCon')]"
                     },
                     "LocationPrefix": {
                         "value": "[parameters('LocationPrefix')]"
@@ -4204,8 +4220,8 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
-                    "SubscriptionPrefixPlt": {
-                        "value": "[parameters('SubscriptionPrefixPlt')]"
+                    "SubscriptionPrefixCon": {
+                        "value": "[parameters('SubscriptionPrefixCon')]"
                     },
                     "LocationPrefix": {
                         "value": "[parameters('LocationPrefix')]"
