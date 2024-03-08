@@ -157,7 +157,7 @@
                             }
                         },
                         {
-                            "name": "SubscriptionPrefixMgtm",
+                            "name": "SubscriptionPrefixMgmt",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Prefix of the management subscription (for single same as connection)",
                             "toolTip": "Provide a Abbreviations of the subscription (max 10 characters, unique at tenant-scope). This will be used for the resource naming",
